@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
+import json
 
-def save_emotions(boxes, prediction, emo_class, image):
+def save_emotions(boxes, lastlayer, prediction, emo_class, image):
 
     emo_class = pd.DataFrame(emo_class, columns = ["classification"])
     prediction = np.array(prediction)
@@ -10,7 +11,6 @@ def save_emotions(boxes, prediction, emo_class, image):
 
     prediction = pd.DataFrame(out_arr)
     boxes = pd.DataFrame(np.array(boxes))
-    #boxes = pd.DataFrame(boxes)
 
     df_emo_class = pd.concat([boxes, prediction.iloc[:, 1:8], emo_class], axis=1)
     df_emo_class.columns = ['face_x', 'face_y', 'face_w', 'face_h',
@@ -19,3 +19,4 @@ def save_emotions(boxes, prediction, emo_class, image):
                             'classification']
 
     df_emo_class.to_csv(image[:-4] + ".csv")
+    np.save(image[:-4] + "_lastlayer.npy", lastlayer)

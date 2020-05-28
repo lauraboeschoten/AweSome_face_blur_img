@@ -26,11 +26,11 @@ for i in range(len(path_list)):
         continue
 
     # 2. read emotions on detected faces
-    prediction, emo_class = mde.detect_emotions(gray, boxes)
+    lastlayer, prediction, emo_class = mde.detect_emotions(gray, boxes)
 
     # 3. make file with face location and emotion results
 
-    mse.save_emotions(boxes, prediction, emo_class, path_list[i])
+    mse.save_emotions(boxes, lastlayer, prediction, emo_class, path_list[i])
 
     # 4. blur image and save
 
